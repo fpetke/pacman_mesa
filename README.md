@@ -1,6 +1,8 @@
 # Pacman
 by Péter Forgács - [Lakeside Labs](https://www.lakeside-labs.com/)
 
+(The purpose of this 'Hello World' project is for me to get some insight into Python's *mesa* package.)
+
 ## Instructions to run the code
 
 - Needed *__Python__ packages*:
