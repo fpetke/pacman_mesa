@@ -31,13 +31,17 @@ Have fun!
 An Ant Colony Optimization (ACO) algorithm is used to find the coin.
 
 The pheromone level of a cell $\tau_{ij}$ are updated in the following way:
+
 $$
 \tau_{ij} = (1 - \rho) \cdot \tau_{ij} + \sum_k \frac{n_k^{ij}}{n_k}
 $$
+
 , where $\rho \in \left[ 0, 1 \right]$ is the pheromone evaporation coefficient, $k$ goes through each ant, that already found the coin, $n_k$ is the length of ant $k$'s path, and $n_k^{ij}$ is the number of times the ant $k$ stepped on cell $\left( i, j \right)$.
 
 Now based on the pheromone levels, the possible cells for the next step of an ant and Pacman will have different probabilities. The probability of the next possible cell $p_{ij}^{\text{ant/Pacman}}$ is calculated in the following way:
+
 $$
 p_{ij}^{\text{ant/Pacman}} = \frac{\tau_{ij}^\alpha \cdot \eta_{ij}^\beta}{\sum_{\left( i^\prime, j^\prime \right)} \tau_{i^\prime j^\prime}^\alpha \cdot \eta_{i^\prime j^\prime}^\beta}
 $$
+
 , where $\alpha$ controls the influence of the pheromone levels, $\eta_{ij} = \left( n_{k\text{ or Pacman}}^{ij} \right)^{-1}$ is the desirability of cell $\left( i, j \right)$, $\beta$ controls the influence of the desirability, the coordinates $\left( i^\prime, j^\prime \right)$ are all the possible coordinates for the next step.
