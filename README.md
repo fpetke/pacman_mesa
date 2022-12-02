@@ -1,5 +1,5 @@
 # Pacman
-by Péter Forgács
+by Péter Forgács - [Lakeside Labs](https://www.lakeside-labs.com/)
 
 ## Instructions to run the code
 
