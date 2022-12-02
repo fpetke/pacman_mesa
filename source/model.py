@@ -139,6 +139,8 @@ class PacmanGame(mesa.Model):
         self.pheromones_visible = pheromones_visible
 
     def pheromone_update(self):
+        if self.coin.found:
+            self.tau_max = self.cells[random.choice(list(self.cells.keys()))].tau
         for pos in self.cells:
             s = 0.
             for ant in self.cells[pos].ants_visited:
@@ -150,6 +152,7 @@ class PacmanGame(mesa.Model):
 
     def coin_moved(self):
         self.tau_max = 1.
+        self.coin.found = False
         for pos in self.cells:
             self.cells[pos].tau = 1e-5
             self.cells[pos].ants_visited.clear()
@@ -349,6 +352,7 @@ class AntAgent(PacmanWalker):
             self.model.cells[self.pos].ants_visited.append(self)
         if self.model.coin.pos == self.pos:
             self.found_coin = True
+            self.model.coin.found = True
 
     def coin_moved(self):
         self.found_coin = False
@@ -380,6 +384,7 @@ class CoinAgent(mesa.Agent):
     def __init__(self, unique_id: int, model: mesa.Model, pos) -> None:
         super().__init__(unique_id, model)
         self.pos = pos
+        self.found = False
 
 class WallAgent(mesa.Agent):
     def __init__(self, unique_id: int, model: mesa.Model, pos) -> None:
