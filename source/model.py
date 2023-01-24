@@ -2,13 +2,13 @@ import mesa
 import numpy as np
 import random
 
-def maze_neighbors(grid_size: int, pos):
+def maze_neighbors(grid_size: int, pos, distance=2):
     '''Returns the positions of the grid neighbors.'''
 
-    i_up = pos[0] - 2
-    i_down = pos[0] + 2
-    j_left = pos[1] - 2
-    j_right = pos[1] + 2
+    i_up = pos[0] - distance
+    i_down = pos[0] + distance
+    j_left = pos[1] - distance
+    j_right = pos[1] + distance
 
     if i_up < 0:
         i_up += grid_size
@@ -40,7 +40,7 @@ def cell_between(grid_size: int, pos1, pos2):
     return (i, j)
 
 def generate_maze_walls(grid_size: int):
-    '''Randomized Prim's algorithm'''
+    '''Randomized Prim's algorithm (True - Wall, False - Passage)'''
     maze = np.ones((grid_size, grid_size), np.bool_)
     frontiers = []
 
@@ -54,7 +54,7 @@ def generate_maze_walls(grid_size: int):
         frontiers.remove(frontier)
         neighbor_cells = []
         for neighbor in maze_neighbors(grid_size, frontier):
-            if not maze[neighbor]:
+            if not maze[neighbor] and np.array([maze[pos] for pos in maze_neighbors(grid_size, cell_between(grid_size, frontier, neighbor), 1)]).sum() == 3:
                 neighbor_cells.append(neighbor)
         
         if len(neighbor_cells) > 0:
